@@ -1,4 +1,5 @@
 ﻿using Calculator.Parser.Expressions;
+using System.Text.RegularExpressions;
 
 namespace Calculator;
 
@@ -14,6 +15,26 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
+    private string OutputResult()
+    {
+        string expression = _content.Replace('×', '*').Replace('÷', '/');
+
+        decimal result = _calculator.Calculate(expression);
+
+        return result.ToString();
+    }
+
+    private async Task KeypadButtonClicked(object? sender)
+    {
+        if (sender is not Button button)
+            return;
+
+        Vibration.Default.Vibrate(TimeSpan.FromMilliseconds(75));
+
+        await button.ScaleToAsync(0.97, 50);
+        await button.ScaleToAsync(1.0, 50);
+    }
+
     private void OnButtonClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button)
@@ -21,50 +42,48 @@ public partial class MainPage : ContentPage
 
         string value = button.Text;
 
-        value = value switch
-        {
-            "×" => "*",
-            "÷" => "/",
-            _ => value
-        };
-
         _content += value;
 
         DisplayLabel.Text = _content;
+
+        try
+        {
+            ResultLabel.Text = _content != "" ? $"= {OutputResult()}" : "";
+        } catch
+        {
+            ResultLabel.Text = "";
+        }
+
+        _ = KeypadButtonClicked(button);
     }
 
     private void OnEqualsClicked(object? sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(_content))
+        if (sender is not Button button || string.IsNullOrWhiteSpace(_content))
             return;
 
         try
         {
-            decimal result = _calculator.Calculate(_content);
-
-            _content = result.ToString();
+            _content = OutputResult();
             DisplayLabel.Text = _content;
         }
         catch
         {
             DisplayLabel.Text = "Error";
+            _content = "";
         }
-    }
 
-    private void OnClearClicked(object? sender, EventArgs e)
-    {
-        _content = "";
-        DisplayLabel.Text = "0";
+        _ = KeypadButtonClicked(button);
     }
 
     private async void OnBackspacePressed(object? sender, EventArgs e)
     {
-        if (string.IsNullOrEmpty(_content))
+        if (sender is not Button button)
             return;
 
         _isDeleting = true;
 
-        int delay = 200;
+        int delay = 150;
 
         while (_isDeleting && _content.Length > 0)
         {
@@ -75,11 +94,24 @@ public partial class MainPage : ContentPage
                     ? "0"
                     : _content;
 
+            try
+            {
+                ResultLabel.Text = _content != "" ? $"= {OutputResult()}" : "";
+            }
+            catch
+            {
+                ResultLabel.Text = "= ";
+            }
+
+            Vibration.Default.Vibrate(TimeSpan.FromMilliseconds(50));
+
             await Task.Delay(delay);
 
-            if (delay > 100)
+            if (delay > 50)
                 delay -= 10;
         }
+
+        _ = KeypadButtonClicked(button);
     }
 
     private void OnBackspaceReleased(object? sender, EventArgs e)

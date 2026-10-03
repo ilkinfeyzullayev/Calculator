@@ -6,147 +6,159 @@
     <Grid RowDefinitions="2*,8*" Padding="20">
 
         <!-- Display -->
-        <Label x:Name="DisplayLabel"
-               Text="0"
-               FontSize="40"
-               HorizontalOptions="End"
-               VerticalOptions="Center"
-               Grid.Row="0"/>
+        <VerticalStackLayout Grid.Row="0"
+                     VerticalOptions="Center"
+                     Spacing="5">
+
+            <!-- Current expression -->
+            <Label x:Name="DisplayLabel"
+           Text="0"
+           FontSize="40"
+           HorizontalOptions="End"/>
+
+            <!-- Current result -->
+            <Label x:Name="ResultLabel"
+           Text=""
+           FontSize="24"
+           Opacity="0.6"
+           HorizontalOptions="End"/>
+
+        </VerticalStackLayout>
 
         <!-- Keypad -->
         <Grid x:Name="KeypadGrid"
-              Grid.Row="1"
-              ColumnDefinitions="*,*,*,*"
-              RowDefinitions="55,55,55,55,55"
-              ColumnSpacing="10"
-              RowSpacing="10"
-              VerticalOptions="End">
+      Grid.Row="1"
+      ColumnDefinitions="*,*,*,*"
+      RowDefinitions="55,55,55,55,55"
+      ColumnSpacing="10"
+      RowSpacing="10"
+      VerticalOptions="End">
 
             <!-- Row 0 -->
-            <Button x:Name="BackspaceButton"
-                    Text="⌫"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Pressed="OnBackspacePressed"
-                    Released="OnBackspaceReleased"/>
-
             <Button x:Name="LeftParenthesisButton"
-                    Text="("
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Clicked="OnButtonClicked"/>
+            Text="("
+            Grid.Row="0"
+            Grid.Column="0"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="RightParenthesisButton"
-                    Text=")"
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Clicked="OnButtonClicked"/>
+            Text=")"
+            Grid.Row="0"
+            Grid.Column="1"
+            Clicked="OnButtonClicked"/>
+
+            <Button x:Name="PowerButton"
+            Text="^"
+            Grid.Row="0"
+            Grid.Column="2"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="DivideButton"
-                    Text="÷"
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Clicked="OnButtonClicked"/>
+            Text="÷"
+            Grid.Row="0"
+            Grid.Column="3"
+            Clicked="OnButtonClicked"/>
 
             <!-- Row 1 -->
             <Button x:Name="SevenButton"
-                    Text="7"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Clicked="OnButtonClicked"/>
+            Text="7"
+            Grid.Row="1"
+            Grid.Column="0"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="EightButton"
-                    Text="8"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Clicked="OnButtonClicked"/>
+            Text="8"
+            Grid.Row="1"
+            Grid.Column="1"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="NineButton"
-                    Text="9"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Clicked="OnButtonClicked"/>
+            Text="9"
+            Grid.Row="1"
+            Grid.Column="2"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="MultiplyButton"
-                    Text="×"
-                    Grid.Row="1"
-                    Grid.Column="3"
-                    Clicked="OnButtonClicked"/>
+            Text="×"
+            Grid.Row="1"
+            Grid.Column="3"
+            Clicked="OnButtonClicked"/>
 
             <!-- Row 2 -->
             <Button x:Name="FourButton"
-                    Text="4"
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Clicked="OnButtonClicked"/>
+            Text="4"
+            Grid.Row="2"
+            Grid.Column="0"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="FiveButton"
-                    Text="5"
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Clicked="OnButtonClicked"/>
+            Text="5"
+            Grid.Row="2"
+            Grid.Column="1"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="SixButton"
-                    Text="6"
-                    Grid.Row="2"
-                    Grid.Column="2"
-                    Clicked="OnButtonClicked"/>
+            Text="6"
+            Grid.Row="2"
+            Grid.Column="2"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="MinusButton"
-                    Text="-"
-                    Grid.Row="2"
-                    Grid.Column="3"
-                    Clicked="OnButtonClicked"/>
+            Text="-"
+            Grid.Row="2"
+            Grid.Column="3"
+            Clicked="OnButtonClicked"/>
 
             <!-- Row 3 -->
             <Button x:Name="OneButton"
-                    Text="1"
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Clicked="OnButtonClicked"/>
+            Text="1"
+            Grid.Row="3"
+            Grid.Column="0"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="TwoButton"
-                    Text="2"
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Clicked="OnButtonClicked"/>
+            Text="2"
+            Grid.Row="3"
+            Grid.Column="1"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="ThreeButton"
-                    Text="3"
-                    Grid.Row="3"
-                    Grid.Column="2"
-                    Clicked="OnButtonClicked"/>
+            Text="3"
+            Grid.Row="3"
+            Grid.Column="2"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="PlusButton"
-                    Text="+"
-                    Grid.Row="3"
-                    Grid.Column="3"
-                    Clicked="OnButtonClicked"/>
+            Text="+"
+            Grid.Row="3"
+            Grid.Column="3"
+            Clicked="OnButtonClicked"/>
 
             <!-- Row 4 -->
-            <Button x:Name="ClearButton"
-                    Text="C"
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Clicked="OnClearClicked"/>
+            <Button x:Name="BackspaceButton"
+            Text="⌫"
+            Grid.Row="4"
+            Grid.Column="0"
+            Pressed="OnBackspacePressed"
+            Released="OnBackspaceReleased"/>
 
             <Button x:Name="ZeroButton"
-                    Text="0"
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Clicked="OnButtonClicked"/>
+            Text="0"
+            Grid.Row="4"
+            Grid.Column="1"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="DecimalButton"
-                    Text="."
-                    Grid.Row="4"
-                    Grid.Column="2"
-                    Clicked="OnButtonClicked"/>
+            Text="."
+            Grid.Row="4"
+            Grid.Column="2"
+            Clicked="OnButtonClicked"/>
 
             <Button x:Name="EqualsButton"
-                    Text="="
-                    Grid.Row="4"
-                    Grid.Column="3"
-                    Clicked="OnEqualsClicked"/>
+            Text="="
+            Grid.Row="4"
+            Grid.Column="3"
+            Clicked="OnEqualsClicked"/>
 
         </Grid>
 
