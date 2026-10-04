@@ -5,25 +5,36 @@
 
     <Grid RowDefinitions="2*,8*" Padding="20">
 
-        <!-- Display -->
-        <VerticalStackLayout Grid.Row="0"
-                     VerticalOptions="Center"
-                     Spacing="5">
+        <!-- Display area -->
+        <Grid Grid.Row="0"
+          RowDefinitions="*,*"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill">
 
-            <!-- Current expression -->
             <Label x:Name="DisplayLabel"
-           Text="0"
-           FontSize="40"
-           HorizontalOptions="End"/>
+               Grid.Row="0"
+               Text="0"
+               FontSize="40"
+               HorizontalOptions="Fill"
+               HorizontalTextAlignment="End"
+               VerticalOptions="Fill"
+               VerticalTextAlignment="Center"
+               MaxLines="1"
+               LineBreakMode="NoWrap"/>
 
-            <!-- Current result -->
             <Label x:Name="ResultLabel"
-           Text=""
-           FontSize="24"
-           Opacity="0.6"
-           HorizontalOptions="End"/>
+               Grid.Row="1"
+               Text=""
+               FontSize="24"
+               Opacity="0.6"
+               HorizontalOptions="Fill"
+               HorizontalTextAlignment="End"
+               VerticalOptions="Fill"
+               VerticalTextAlignment="Center"
+               MaxLines="1"
+               LineBreakMode="NoWrap"/>
 
-        </VerticalStackLayout>
+        </Grid>
 
         <!-- Keypad -->
         <Grid x:Name="KeypadGrid"

@@ -1,4 +1,5 @@
-﻿using Calculator.Parser.Expressions;
+﻿using Android.Security.Identity;
+using Calculator.Parser.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Calculator;
@@ -15,13 +16,37 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
+    private void UpdateDisplay()
+    {
+        double availableWidth = DisplayLabel.Width;
+
+        if (availableWidth <= 0)
+            return;
+
+        DisplayLabel.FontSize = 40;
+
+        double textWidth = DisplayLabel.Measure(
+            double.PositiveInfinity,
+            double.PositiveInfinity
+        ).Width;
+
+        if (textWidth <= availableWidth)
+            return;
+
+        double scale = availableWidth / textWidth;
+
+        DisplayLabel.FontSize *= scale;
+        ResultLabel.FontSize *= scale;
+    }
+
     private string OutputResult()
     {
         string expression = _content.Replace('×', '*').Replace('÷', '/');
 
         decimal result = _calculator.Calculate(expression);
 
-        return result.ToString();
+        return Math.Round(result, 15)
+    .ToString("#,##0.#################");
     }
 
     private async Task KeypadButtonClicked(object? sender)
@@ -44,7 +69,13 @@ public partial class MainPage : ContentPage
 
         _content += value;
 
-        DisplayLabel.Text = _content;
+        UpdateDisplay();
+
+        DisplayLabel.Text = Regex.Replace(
+    _content,
+    @"\d+(?:\.\d+)?",
+    match => decimal.Parse(match.Value)
+        .ToString("#,##0.############################"));
 
         try
         {
@@ -65,7 +96,13 @@ public partial class MainPage : ContentPage
         try
         {
             _content = OutputResult();
-            DisplayLabel.Text = _content;
+            UpdateDisplay();
+            DisplayLabel.Text = Regex.Replace(
+    _content,
+    @"\d+(?:\.\d+)?",
+    match => decimal.Parse(match.Value)
+        .ToString("#,##0.############################")); ;
+            ResultLabel.Text = "";
         }
         catch
         {
@@ -89,10 +126,16 @@ public partial class MainPage : ContentPage
         {
             _content = _content[..^1];
 
+            UpdateDisplay();
+
             DisplayLabel.Text =
                 string.IsNullOrEmpty(_content)
                     ? "0"
-                    : _content;
+                    : Regex.Replace(
+    _content,
+    @"\d+(?:\.\d+)?",
+    match => decimal.Parse(match.Value)
+        .ToString("#,##0.############################")); ;
 
             try
             {
